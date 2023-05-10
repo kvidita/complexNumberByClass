@@ -83,7 +83,6 @@ class Imaginary {
   multiplyImaginary(other) {
     const minusOne = new Real(-1);
     return this.#real.multiply(other.#real).multiply(minusOne);
-    //return new Real(real)
   }
 
   multiplyReal(other) {
@@ -115,6 +114,13 @@ class ComplexNum {
   subtract(other) {
     const real = this.#real.subtract(other.#real)
     const imaginary = this.#imaginary.subtract(other.#imaginary)
+    return new ComplexNum(real, imaginary)
+  }
+
+  multiply(other) {
+    const realFromImg = this.#imaginary.multiplyImaginary(other.#imaginary);
+    const real = realFromImg.add(this.#real.multiply(other.#real));
+    const imaginary = this.#imaginary.multiplyReal(other.#imaginary).add(other.#imaginary.multiplyReal(this.#imaginary));
     return new ComplexNum(real, imaginary)
   }
 };
